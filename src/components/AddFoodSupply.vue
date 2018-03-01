@@ -37,13 +37,14 @@
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="blue darken-1" flat @click.native="foodsupply = false">Cancel</v-btn>
-          <v-btn color="blue darken-1" flat @click.native="foodsupply = false">Confirm</v-btn>
+          <v-btn color="blue darken-1" flat v-on:click="Afoodsupply">Confirm</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
 </template>
 
 <script>
+import firebase from 'firebase'
 export default {
   props: ['foodsupply'],
   name: 'AddFoodSupply',
@@ -53,6 +54,15 @@ export default {
         landscape: true,
         picker: null
      }
+  },
+  methods: {
+      Afoodsupply: function () {
+          firebase.firestore().collection('foodavailable').doc().set({
+
+          }).then(success => {
+              console.log(success)
+          })
+      }
   },
   mounted () {
       console.log(this.foodsupply)

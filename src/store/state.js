@@ -7,5 +7,6 @@ export default {
         storageBucket: 'onehack-hackathon.appspot.com',
         messagingSenderId: '697436532801'
     },
-    userType: null  
+    userType: null,
+    currentLocation: null
 }

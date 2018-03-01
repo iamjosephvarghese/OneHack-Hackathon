@@ -53,7 +53,6 @@
    @alertMe="alert"
    @logout="logout"
    @abc="abc"
-   @def="def"
    @addmoney="addmoney"
     ></fab>
 
@@ -124,27 +123,23 @@ export default {
           fabActions: [
               {
                   name: 'cache',
-                  icon: 'cached'
+                  icon: 'local_dining'
               },
               {
                   name: 'alertMe',
-                  icon: 'add_alert'
-              },
-              {
-                  name: 'def',
-                  icon: 'cached'
+                  icon: 'monetization_on'
               },
               {
                   name: 'abc',
-                  icon: 'add_alert'
+                  icon: 'local_grocery_store'
               },
               {
                   name: 'logout',
-                  icon: 'add_alert'
+                  icon: 'exit_to_app'
               },
               {
                   name: 'addmoney',
-                  icon: 'add_alert'
+                  icon: 'attach_money'
               }
           ]
     }
@@ -152,26 +147,36 @@ export default {
   name: 'App',
   methods: {
     cache () {
+        // function to request food
           this.foodreq = true
       },
       alert () {
+        // function to request money
           alert('Clicked on alert icon')
       },
       addmoney () {
+        // function to add money
         this.addMoney = true
       },
       abc () {
+        // function to add food supply
            this.foodsupply = true
       },
-      def () {
-
-      },
       logout () {
+        // function to logout
         firebase.auth().signOut().then(success => {
           console.log('signout')
           this.$router.replace('/login')
         })
       }
+  },
+  mounted () {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(position => {
+        console.log(position.coords)
+        this.$store.commit('SET_CURRENT_LOCATION', position.coords)
+      })
+    }
   }
 }
 </script>
