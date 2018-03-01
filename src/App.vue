@@ -52,8 +52,8 @@
 ></fab>
 
 
-<!-- dialog    for request -->
-     <v-dialog v-model="dialog" persistent max-width="500px">
+<!-- dialog    for Food request -->
+     <v-dialog v-model="foodreq" persistent max-width="500px">
       <v-card>
         <v-card-title>
           <span class="headline">User Profile</span>
@@ -64,47 +64,34 @@
               <v-flex xs12 sm6 md4>
                 <v-text-field label="Quantity Required" hint="No of Plates Required" required></v-text-field>
               </v-flex>
-              <v-flex xs12 sm6 md4>
-                <v-text-field label=""></v-text-field >
-              </v-flex>
-              <v-flex xs12 sm6 md4>
-                <v-text-field
-                  label="Legal last name"
-                  hint="example of persistent helper text"
-                  persistent-hint
-                  required
-                ></v-text-field>
-              </v-flex>
-              <v-flex xs12>
-                <v-text-field label="Email" required></v-text-field>
-              </v-flex>
-              <v-flex xs12>
-                <v-text-field label="Password" type="password" required></v-text-field>
-              </v-flex>
-              <v-flex xs12 sm6>
+             <v-flex xs12 sm6>
                 <v-select
                   label="Timing Slot"
                   required
                   :items="['Breakfast', 'Lunch', 'Dinner']"
                 ></v-select>
               </v-flex>
-              <v-flex xs12 sm6>
+          
+              <v-date-picker v-model="picker" :landscape="landscape" :reactive="reactive"></v-date-picker>
+          
+              
+              <!-- <v-flex xs12 sm6>
                 <v-select
                   label="Interests"
                   multiple
                   autocomplete
                   chips
                   :items="['Skiing', 'Ice hockey', 'Soccer', 'Basketball', 'Hockey', 'Reading', 'Writing', 'Coding', 'Basejump']"
-                ></v-select>
-              </v-flex>
+                ></v-select> -->
+              <!-- </v-flex> -->
             </v-layout>
           </v-container>
           <small>*indicates required field</small>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="blue darken-1" flat @click.native="dialog = false">Close</v-btn>
-          <v-btn color="blue darken-1" flat @click.native="dialog = false">Save</v-btn>
+          <v-btn color="blue darken-1" flat @click.native="foodreq = false">Cancel</v-btn>
+          <v-btn color="blue darken-1" flat @click.native="foodreq = false">Confirm</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -188,6 +175,9 @@ export default {
       }],
       miniVariant: false,
       rightDrawer: false,
+      picker: null,
+      reactive: true,
+      landscape: true,
       zin: 999,
       dialog: false,
       title: 'Vuetify.js',
@@ -217,9 +207,9 @@ export default {
   name: 'App',
   methods: {
     cache () {
-          this.dialog = true
+          this.foodreq = true
           console.log('he')
-          this.zin = -1
+          this.zin = 10
       },
       alert () {
           alert('Clicked on alert icon')
