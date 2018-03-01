@@ -2,6 +2,11 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import App from './App'
+
+import firebase from 'firebase'
+import store from './store'
+
+import { sync } from 'vuex-router-sync'
 import router from './router'
 import {
   Vuetify,
@@ -56,6 +61,10 @@ Vue.use(Vuetify, {
 
 Vue.config.productionTip = false
 
+firebase.initializeApp(store.getters.getFirebaseConfig)
+
+sync(store, router)
+
 router.beforeEach((to, from, next) => {
   console.log(to.fullPath)
   console.log(to.meta)
@@ -65,6 +74,7 @@ router.beforeEach((to, from, next) => {
 new Vue({
   el: '#app',
   router,
+  store,
   components: { App },
   template: '<App/>'
 })
