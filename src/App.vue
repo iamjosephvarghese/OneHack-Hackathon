@@ -62,10 +62,10 @@
           <v-container grid-list-md>
             <v-layout wrap>
               <v-flex xs12 sm6 md4>
-                <v-text-field label="Legal first name" required></v-text-field>
+                <v-text-field label="Quantity Required" hint="No of Plates Required" required></v-text-field>
               </v-flex>
               <v-flex xs12 sm6 md4>
-                <v-text-field label="Legal middle name" hint="example of helper text only on focus"></v-text-field>
+                <v-text-field label=""></v-text-field >
               </v-flex>
               <v-flex xs12 sm6 md4>
                 <v-text-field
@@ -83,9 +83,9 @@
               </v-flex>
               <v-flex xs12 sm6>
                 <v-select
-                  label="Age"
+                  label="Timing Slot"
                   required
-                  :items="['0-17', '18-29', '30-54', '54+']"
+                  :items="['Breakfast', 'Lunch', 'Dinner']"
                 ></v-select>
               </v-flex>
               <v-flex xs12 sm6>
@@ -196,7 +196,7 @@ export default {
           fabActions: [
               {
                   name: 'cache',
-                  
+
                   icon: 'cached'
               },
               {
