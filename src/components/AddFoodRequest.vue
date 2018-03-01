@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="foodreq" persistent max-width="500px">
+  <v-dialog v-model="getRequestModal" persistent max-width="500px">
       <v-card>
         <v-card-title>
           <span class="headline">User Profile</span>
@@ -25,7 +25,7 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="blue darken-1" flat @click.native="foodreq = false">Cancel</v-btn>
+          <v-btn color="blue darken-1" flat v-on:click="cancel">Cancel</v-btn>
           <v-btn color="blue darken-1" flat v-on:click="addFoodReq">Confirm</v-btn>
         </v-card-actions>
       </v-card>
@@ -33,9 +33,10 @@
 </template>
 <script>
 import firebase from 'firebase'
+import { mapGetters } from 'vuex'
+import swal from 'sweetalert'
 export default {
   name: 'AddFoodRequest',
-  props: ['foodreq'],
   data: () => {
       return {
         reactive: true,
@@ -44,15 +45,24 @@ export default {
         Quantity: null
      }
   },
+  computed: {
+      ...mapGetters([
+          'getRequestModal'
+      ])
+  },
   methods: {
+    cancel: function () {
+        this.$store.commit('TOGGLE_REQUEST')
+    },
     addFoodReq: function () {
       var loc = this.$store.getters.getCurrentLocation
       firebase.firestore().collection('foodRequests').doc().set({
           Location: new firebase.firestore.GeoPoint(loc._lat, loc._long),
+          timestamp: firebase.firestore.FieldValue.serverTimestamp,
           meals: this.Quantity,
           name: 'Normal Food'
       }).then(success => {
-          console.log('success')
+          swal('Good job!', 'Successfully submitted Food Request', 'success')
           this.foodreq = false
       })
     } 

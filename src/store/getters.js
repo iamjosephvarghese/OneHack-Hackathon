@@ -6,5 +6,9 @@ export default {
             _lat: state.currentLocation.latitude,
             _long: state.currentLocation.longitude
         }
-    }
+    },
+    getMoneyModal: state => state.AddMoney,
+    getSupplyModal: state => state.addFoodSupply,
+    getRequestModal: state => state.addFoodReq
+
 }

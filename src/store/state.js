@@ -8,5 +8,8 @@ export default {
         messagingSenderId: '697436532801'
     },
     userType: null,
-    currentLocation: null
+    currentLocation: null,
+    addFoodReq: false,
+    addFoodSupply: false,
+    AddMoney: false
 }

@@ -58,11 +58,11 @@
 
 
 <!-- dialog    for Food request -->
-  <add-food-request :foodreq="foodreq"></add-food-request>
+  <add-food-request></add-food-request>
 <!-- dialog    for Food Supply -->
-     <add-food-supply   :foodsupply="foodsupply"></add-food-supply>
+     <add-food-supply ></add-food-supply>
 
-     <add-money :addMoney="addMoney"></add-money>
+     <add-money></add-money>
   </v-app>
   
 </template>
@@ -85,7 +85,6 @@ export default {
       clipped: false,
       drawer: true,
       fixed: false,
-      addMoney: false,
       items: [
         {
           icon: 'bubble_chart',
@@ -113,8 +112,6 @@ export default {
       picker: null,
       reactive: true,
       landscape: true,
-      foodreq: false,
-      foodsupply: false,
       zin: 999,
       dialog: false,
       title: 'Vuetify.js',
@@ -148,7 +145,7 @@ export default {
   methods: {
     cache () {
         // function to request food
-          this.foodreq = true
+          this.$store.commit('TOGGLE_REQUEST')
       },
       alert () {
         // function to request money
@@ -156,11 +153,11 @@ export default {
       },
       addmoney () {
         // function to add money
-        this.addMoney = true
+        this.$store.commit('TOGGLE_MONEY')
       },
       abc () {
         // function to add food supply
-           this.foodsupply = true
+        this.$store.commit('TOGGLE_SUPPLY')
       },
       logout () {
         // function to logout

@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="foodsupply" persistent max-width="500px">
+  <v-dialog v-model="getSupplyModal" persistent max-width="500px">
       <v-card>
         <v-card-title>
           <span class="headline">Supplier Profile</span>
@@ -8,7 +8,7 @@
           <v-container grid-list-md>
             <v-layout wrap>
               <v-flex xs12 sm6 md4>
-                <v-text-field label="Quantity Available" hint="No of Plates Required" required></v-text-field>
+                <v-text-field v-model="Quantity" label="Quantity Available" hint="No of Plates Required" required></v-text-field>
               </v-flex>
              <v-flex xs12 sm6>
                 <v-select
@@ -36,7 +36,7 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="blue darken-1" flat @click.native="foodsupply = false">Cancel</v-btn>
+          <v-btn color="blue darken-1" flat v-on:click="cancel">Cancel</v-btn>
           <v-btn color="blue darken-1" flat v-on:click="Afoodsupply">Confirm</v-btn>
         </v-card-actions>
       </v-card>
@@ -45,27 +45,40 @@
 
 <script>
 import firebase from 'firebase'
+import swal from 'sweetalert'
+import { mapGetters } from 'vuex'
 export default {
-  props: ['foodsupply'],
   name: 'AddFoodSupply',
   data: () => {
       return {
         reactive: true,
         landscape: true,
-        picker: null
+        picker: null,
+        Quantity: null
      }
   },
+  computed: {
+      ...mapGetters([
+          'getSupplyModal'
+      ])
+  },
   methods: {
+      cancel: function () {
+          this.$store.commit('TOGGLE_SUPPLY')
+      },
       Afoodsupply: function () {
-          firebase.firestore().collection('foodavailable').doc().set({
-
+          var loc = this.$store.getters.getCurrentLocation
+          firebase.firestore().collection('foodavailable').add({
+            Location: new firebase.firestore.GeoPoint(loc._lat, loc._long),
+            meals: this.Quantity,
+            // timestamp: firebase.firestore.FieldValue.serverTimestamp,
+            name: 'Normal Food'
           }).then(success => {
-              console.log(success)
+              swal('Good job!', 'Successfully submitted Food Supply', 'success')
           })
       }
   },
   mounted () {
-      console.log(this.foodsupply)
   }
 }
 </script>
