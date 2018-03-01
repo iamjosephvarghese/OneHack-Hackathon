@@ -5,7 +5,6 @@ import App from './App'
 
 import firebase from 'firebase'
 import store from './store'
-
 import { sync } from 'vuex-router-sync'
 import router from './router'
 import {
@@ -65,18 +64,38 @@ Vue.config.productionTip = false
 
 firebase.initializeApp(store.getters.getFirebaseConfig)
 
+let app
+
 sync(store, router)
 
 router.beforeEach((to, from, next) => {
-  console.log(to.fullPath)
-  console.log(to.meta)
+  var currentUser = firebase.auth().currentUser
+  console.log(currentUser)
+  let requiresAuth = to.matched.some(record => record.meta.requiresAuth)
+  if (requiresAuth) {
+    if (currentUser) {
+      next()
+    } else {
+      next({
+        path: '/login'
+      })
+    }
+  } else {
+    next()
+  }
   next()
 })
 /* eslint-disable no-new */
-new Vue({
-  el: '#app',
-  router,
-  store,
-  components: { App },
-  template: '<App/>'
-})
+firebase.auth().onAuthStateChanged(
+  function (user) {
+    if (!app) {
+      app = new Vue({
+        el: '#app',
+        router,
+        store,
+        components: { App },
+        template: '<App/>'
+      })
+    }
+  })
+

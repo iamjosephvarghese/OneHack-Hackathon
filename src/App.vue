@@ -49,6 +49,9 @@
    :z-index="zin"
    @cache="cache"
    @alertMe="alert"
+   @logout="logout"
+   @abc="abc"
+   @def="def"
 ></fab>
 
 
@@ -160,6 +163,7 @@
 
 <script>
 import fab from 'vue-fab'
+import firebase from 'firebase'
 export default {
   components: {
     fab
@@ -178,6 +182,8 @@ export default {
       picker: null,
       reactive: true,
       landscape: true,
+      foodreq: false,
+      foodsupply: false,
       zin: 999,
       dialog: false,
       title: 'Vuetify.js',
@@ -194,11 +200,15 @@ export default {
                   icon: 'add_alert'
               },
               {
-                  name: 'cache',
+                  name: 'def',
                   icon: 'cached'
               },
               {
-                  name: 'alertMe',
+                  name: 'abc',
+                  icon: 'add_alert'
+              },
+              {
+                  name: 'logout',
                   icon: 'add_alert'
               }
           ]
@@ -213,6 +223,17 @@ export default {
       },
       alert () {
           alert('Clicked on alert icon')
+      },
+      abc () {
+
+      },
+      def () {
+
+      },
+      logout () {
+        firebase.auth().signOut().then(success => {
+          console.log('signout')
+        })
       }
   }
 }

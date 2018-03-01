@@ -50,8 +50,7 @@ require('firebase/firestore')
                 this.$store.commit('SET_USERTYPE', this.usertype)
                 this.$router.replace('/')
                 console.log(success)
-            })
-            .catch(function (error) {
+            }).catch(function (error) {
                 console.log(error)
             })
         }
