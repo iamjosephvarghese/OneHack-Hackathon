@@ -1,5 +1,6 @@
 <template>
   <v-app>
+
     <v-navigation-drawer
       persistent
       :mini-variant="miniVariant"
@@ -14,6 +15,7 @@
           value="true"
           v-for="(item, i) in items"
           :key="i"
+          :to="item.to"
         >
           <v-list-tile-action>
             <v-icon v-html="item.icon"></v-icon>
@@ -39,7 +41,7 @@
     </v-content>
     
     <v-footer :fixed="fixed" app>
-      <span>&copy;copyRight 2017</span>
+      <span>&copy;Copyright 2018</span>
     </v-footer>
     
     <fab
@@ -52,173 +54,61 @@
    @logout="logout"
    @abc="abc"
    @def="def"
-></fab>
+   @addmoney="addmoney"
+    ></fab>
 
 
 <!-- dialog    for Food request -->
-     <v-dialog v-model="foodreq" persistent max-width="500px">
-      <v-card>
-        <v-card-title>
-          <span class="headline">User Profile</span>
-        </v-card-title>
-        <v-card-text>
-          <v-container grid-list-md>
-            <v-layout wrap>
-              <v-flex xs12 sm6 md4>
-                <v-text-field label="Quantity Required" hint="No of Plates Required" required></v-text-field>
-              </v-flex>
-             <v-flex xs12 sm6>
-                <v-select
-                  label="Timing Slot"
-                  required
-                  :items="['Breakfast', 'Lunch', 'Dinner']"
-                ></v-select>
-              </v-flex>
-          
-              <v-date-picker v-model="picker" :landscape="landscape" :reactive="reactive"></v-date-picker>
-          
-              
-              <!-- <v-flex xs12 sm6>
-                <v-select
-                  label="Interests"
-                  multiple
-                  autocomplete
-                  chips
-                  :items="['Skiing', 'Ice hockey', 'Soccer', 'Basketball', 'Hockey', 'Reading', 'Writing', 'Coding', 'Basejump']"
-                ></v-select> -->
-              <!-- </v-flex> -->
-            </v-layout>
-          </v-container>
-          <small>*indicates required field</small>
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="blue darken-1" flat @click.native="foodreq = false">Cancel</v-btn>
-          <v-btn color="blue darken-1" flat @click.native="foodreq = false">Confirm</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
-
-<!-- dialog for request ends -->
-
+  <add-food-request :foodreq="foodreq"></add-food-request>
 <!-- dialog    for Food Supply -->
-     <v-dialog v-model="foodsupply" persistent max-width="500px">
-      <v-card>
-        <v-card-title>
-          <span class="headline">Supplier Profile</span>
-        </v-card-title>
-        <v-card-text>
-          <v-container grid-list-md>
-            <v-layout wrap>
-              <v-flex xs12 sm6 md4>
-                <v-text-field label="Quantity Available" hint="No of Plates Required" required></v-text-field>
-              </v-flex>
-             <v-flex xs12 sm6>
-                <v-select
-                  label="Timing Slot"
-                  required
-                  :items="['Breakfast', 'Lunch', 'Dinner']"
-                ></v-select>
-              </v-flex>
-          
-              <v-date-picker v-model="picker" :landscape="landscape" :reactive="reactive"></v-date-picker>
-          
-              
-              <!-- <v-flex xs12 sm6>
-                <v-select
-                  label="Interests"
-                  multiple
-                  autocomplete
-                  chips
-                  :items="['Skiing', 'Ice hockey', 'Soccer', 'Basketball', 'Hockey', 'Reading', 'Writing', 'Coding', 'Basejump']"
-                ></v-select> -->
-              <!-- </v-flex> -->
-            </v-layout>
-          </v-container>
-          <small>*indicates required field</small>
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="blue darken-1" flat @click.native="foodsupply = false">Cancel</v-btn>
-          <v-btn color="blue darken-1" flat @click.native="foodsupply = false">Confirm</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
-      <v-card>
-        <v-card-title>
-          <span class="headline">User Profile</span>
-        </v-card-title>
-        <v-card-text>
-          <v-container grid-list-md>
-            <v-layout wrap>
-              <v-flex xs12 sm6 md4>
-                <v-text-field label="Legal first name" required></v-text-field>
-              </v-flex>
-              <v-flex xs12 sm6 md4>
-                <v-text-field label="Legal middle name" hint="example of helper text only on focus"></v-text-field>
-              </v-flex>
-              <v-flex xs12 sm6 md4>
-                <v-text-field
-                  label="Legal last name"
-                  hint="example of persistent helper text"
-                  persistent-hint
-                  required
-                ></v-text-field>
-              </v-flex>
-              <v-flex xs12>
-                <v-text-field label="Email" required></v-text-field>
-              </v-flex>
-              <v-flex xs12>
-                <v-text-field label="Password" type="password" required></v-text-field>
-              </v-flex>
-              <v-flex xs12 sm6>
-                <v-select
-                  label="Age"
-                  required
-                  :items="['0-17', '18-29', '30-54', '54+']"
-                ></v-select>
-              </v-flex>
-              <v-flex xs12 sm6>
-                <v-select
-                  label="Interests"
-                  multiple
-                  autocomplete
-                  chips
-                  :items="['Skiing', 'Ice hockey', 'Soccer', 'Basketball', 'Hockey', 'Reading', 'Writing', 'Coding', 'Basejump']"
-                ></v-select>
-              </v-flex>
-            </v-layout>
-          </v-container>
-          <small>*indicates required field</small>
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="blue darken-1" flat @click.native="dialog = false">Close</v-btn>
-          <v-btn color="blue darken-1" flat @click.native="dialog = false">Save</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
+     <add-food-supply   :foodsupply="foodsupply"></add-food-supply>
 
-         </v-app>
+     <add-money :addMoney="addMoney"></add-money>
+  </v-app>
   
 </template>
 
 <script>
 import fab from 'vue-fab'
 import firebase from 'firebase'
+import AddFoodRequest from '@/components/AddFoodRequest'
+import AddFoodSupply from '@/components/AddFoodSupply'
+import AddMoney from '@/components/AddMoney'
 export default {
   components: {
-    fab
+    fab,
+    AddFoodSupply,
+    AddFoodRequest,
+    AddMoney
   },
   data () {
     return {
       clipped: false,
       drawer: true,
       fixed: false,
-      items: [{
-        icon: 'bubble_chart',
-        title: 'Inspire'
-      }],
+      addMoney: false,
+      items: [
+        {
+          icon: 'bubble_chart',
+          title: 'Dashboard',
+          to: '/'
+        },
+        {
+          icon: 'bubble_chart',
+          title: 'Food Requests',
+          to: '/foodrequests'
+        },
+        {
+          icon: 'bubble_chart',
+          title: 'Foods Available',
+          to: '/foods'
+        },
+        {
+          icon: 'bubble_chart',
+          title: 'Logout',
+          to: '/login'
+        }
+      ],
       miniVariant: false,
       rightDrawer: false,
       picker: null,
@@ -234,7 +124,6 @@ export default {
           fabActions: [
               {
                   name: 'cache',
-
                   icon: 'cached'
               },
               {
@@ -252,6 +141,10 @@ export default {
               {
                   name: 'logout',
                   icon: 'add_alert'
+              },
+              {
+                  name: 'addmoney',
+                  icon: 'add_alert'
               }
           ]
     }
@@ -260,16 +153,15 @@ export default {
   methods: {
     cache () {
           this.foodreq = true
-          console.log('he')
-          this.zin = 10
       },
       alert () {
           alert('Clicked on alert icon')
       },
+      addmoney () {
+        this.addMoney = true
+      },
       abc () {
            this.foodsupply = true
-          console.log('hehe')
-          this.zin = 10
       },
       def () {
 

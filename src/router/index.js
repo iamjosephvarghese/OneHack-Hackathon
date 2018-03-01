@@ -2,6 +2,8 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import DashView from '@/components/DashView'
 import Login from '@/components/Login'
+import FoodsAvailable from '@/components/FoodsAvailable'
+import FoodRequests from '@/components/FoodRequests'
 
 Vue.use(Router)
 
@@ -17,7 +19,20 @@ export default new Router({
       component: DashView,
       name: 'DashView',
       meta: {requiresAuth: true}
+    },
+    {
+      path: '/foods',
+      component: FoodsAvailable,
+      name: 'FoodsAvailable',
+      meta: {requiresAuth: true}
+    },
+    {
+      path: '/foodrequests',
+      component: FoodRequests,
+      name: 'FoodRequests',
+      meta: {requiresAuth: true}
     }
+
   ],
   mode: 'history',
   linkExactActiveClass: 'active',
