@@ -2,6 +2,7 @@
   <v-app>
 
     <v-navigation-drawer
+      v-if="user"
       persistent
       :mini-variant="miniVariant"
       :clipped="clipped"
@@ -31,7 +32,7 @@
       app
       :clipped-left="clipped"
     >
-      <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
+      <v-toolbar-side-icon  v-if="user" @click.stop="drawer = !drawer"></v-toolbar-side-icon>
      <v-toolbar-title v-text="title"></v-toolbar-title>
       <v-spacer></v-spacer>
     </v-toolbar>
@@ -110,11 +111,12 @@ export default {
       miniVariant: false,
       rightDrawer: false,
       picker: null,
+      user: null,
       reactive: true,
       landscape: true,
       zin: 999,
       dialog: false,
-      title: 'Vuetify.js',
+      title: 'oneHack',
       bgColor: '#778899',
           position: 'bottom-right',
           fabActions: [
@@ -163,11 +165,13 @@ export default {
         // function to logout
         firebase.auth().signOut().then(success => {
           console.log('signout')
+          this.user = null
           this.$router.replace('/login')
         })
       }
   },
   mounted () {
+    this.user = firebase.auth().currentUser
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(position => {
         console.log(position.coords)
