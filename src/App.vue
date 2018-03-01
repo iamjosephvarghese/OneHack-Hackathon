@@ -233,6 +233,7 @@ export default {
       logout () {
         firebase.auth().signOut().then(success => {
           console.log('signout')
+          this.$router.replace('/login')
         })
       }
   }

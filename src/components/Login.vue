@@ -4,14 +4,22 @@
           <v-flex xs12 sm8 md4>
             <v-card class="elevation-12">
               <v-toolbar dark color="primary">
-                <v-toolbar-title>Login form</v-toolbar-title>
+                <v-toolbar-title>Login </v-toolbar-title>
                 <v-spacer></v-spacer>
               </v-toolbar>
               <v-card-text>
                 <v-form>
+                     <v-alert
+                        type="error"
+                        :value="logindata"
+                        transition="scale-transition"
+                        >
+                        {{logindata}}
+                    </v-alert>
                   <v-text-field v-model="email" prepend-icon="person" name="login" label="Email" type="email"></v-text-field>
                   <v-text-field v-model="password" prepend-icon="lock" name="password" label="Password" id="password" type="password"></v-text-field>
-                  <v-select
+                  <v-select 
+                   prepend-icon="lock"
                   label="User"
                   autocomplete
                   chips
@@ -37,7 +45,8 @@ require('firebase/firestore')
       drawer: null,
       email: null,
       password: null,
-      usertype: null
+      usertype: null,
+      logindata: null
     }),
     props: {
       source: String
@@ -45,14 +54,19 @@ require('firebase/firestore')
     methods: {
         login: function () {
             console.log('login')
-            firebase.auth().signInWithEmailAndPassword(this.email, this.password)
-            .then(success => {
-                this.$store.commit('SET_USERTYPE', this.usertype)
-                this.$router.replace('/')
-                console.log(success)
-            }).catch(function (error) {
-                console.log(error)
-            })
+            if (this.email && this.password && this.usertype) {
+                 firebase.auth().signInWithEmailAndPassword(this.email, this.password)
+                .then(success => {
+                    this.$store.commit('SET_USERTYPE', this.usertype)
+                    this.$router.replace('/')
+                    console.log(success)
+                }).catch((error) => {
+                    console.log(error)
+                    this.logindata = error.message
+                })
+            } else {
+                this.logindata = 'Enter all the details'
+            }
         }
     }
   }
