@@ -51,8 +51,7 @@ export default {
           firebase.firestore().collection('money').add({
               amount: this.totalamount
           }).then(success => {
-
-              //TODO: change data here
+              // TODO: change data here
         axios({
             method: 'get',
             url: '/user/12345',

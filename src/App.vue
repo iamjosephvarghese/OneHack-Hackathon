@@ -34,7 +34,7 @@
               <img src="./assets/zero.svg" >
             </v-list-tile-avatar>
             <v-list-tile-content>
-              <v-list-tile-title>ZERO APP</v-list-tile-title>
+              <v-list-tile-title class="logoTitle">ZERO APP</v-list-tile-title>
             </v-list-tile-content>
           </v-list-tile>
       <v-list>
@@ -230,7 +230,19 @@ export default {
   z-index: 0;
   height: 100%;
 }
+.list__tile--avatar {
+    height: 200px !important;
+    background-color: grey;
+}
 .avatar {
-  height:100px;
+  height:100px !important;
+  width:100px !important;
+}
+
+.logoTitle {
+  font-size: 2rem;
+  margin-top:1rem;
+  color: white;
+  font-weight: 900
 }
 </style>
