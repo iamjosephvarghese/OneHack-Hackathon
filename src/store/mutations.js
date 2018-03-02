@@ -13,5 +13,11 @@ export default {
     },
     TOGGLE_SUPPLY (state) {
         state.addFoodSupply = !state.addFoodSupply
+    },
+    SET_USER (state) {
+        state.User = true
+    },
+    DEL_USER (state) {
+        state.User = null
     }
 }

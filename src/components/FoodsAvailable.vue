@@ -17,12 +17,36 @@
           </v-layout>
         </v-card-title>
         <v-card-actions>
-          <v-btn flat color="orange">Accept</v-btn>
+          <v-btn v-on:click="openModal(item)" flat color="orange">Accept</v-btn>
           <a :href="`http://maps.google.com/?q=${item.Location._lat},${item.Location._long}`"><v-btn flat color="orange">View in Google Maps</v-btn></a>
         </v-card-actions>
       </v-card>
     </v-slide-y-transition>
-
+<v-dialog v-model="dialog" persistent max-width="500px">
+      <v-card>
+        <v-card-title>
+          <span class="headline">Please Confirm your details before Accepting</span>
+        </v-card-title>
+        <v-card-text>
+          <v-container grid-list-md>
+            <v-layout wrap>
+              <v-flex xs12 sm6 md4>
+                <v-text-field label="Target People" required></v-text-field>
+              </v-flex>
+              <v-flex xs12 sm6 md4>
+                <v-text-field label="Mobile Number"></v-text-field>
+              </v-flex>
+            </v-layout>
+          </v-container>
+          <small>*indicates required field</small>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="blue darken-1" flat @click.native="dialog = false">Close</v-btn>
+          <v-btn color="blue darken-1" flat @click.native="dialog = false">CONFIRM</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </v-container>
 </template>
 <script>
@@ -31,7 +55,15 @@ export default {
   name: 'FoodsAvailable',
   data: () => {
     return {
-      cardData: []
+      cardData: [],
+      dialog: false,
+      modalData: null
+    }
+  },
+  methods: {
+    openModal: function (item) {
+      this.dialog = true
+       this.modalData = item
     }
   },
   mounted () {
@@ -59,5 +91,9 @@ li {
 }
 a {
   color: #42b983;
+}
+
+.card {
+  margin-top: 1rem;
 }
 </style>

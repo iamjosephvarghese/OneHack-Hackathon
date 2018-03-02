@@ -58,6 +58,7 @@ require('firebase/firestore')
                  firebase.auth().signInWithEmailAndPassword(this.email, this.password)
                 .then(success => {
                     this.$store.commit('SET_USERTYPE', this.usertype)
+                    this.$store.commit('SET_USER')
                     this.$router.replace('/')
                     console.log(success)
                 }).catch((error) => {

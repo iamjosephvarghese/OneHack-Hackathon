@@ -9,6 +9,7 @@ export default {
     },
     getMoneyModal: state => state.AddMoney,
     getSupplyModal: state => state.addFoodSupply,
-    getRequestModal: state => state.addFoodReq
+    getRequestModal: state => state.addFoodReq,
+    getUser: state => state.User
 
 }

@@ -21,6 +21,7 @@ import {
   VSpeedDial,
   VTextField,
   VCard,
+  VDataTable,
   VIcon,
   vDialog,
   vSelect,
@@ -29,13 +30,14 @@ import {
   transitions
 } from 'vuetify'
 import '../node_modules/vuetify/src/stylus/app.styl'
-
+import VueParticles from 'vue-particles'
 Vue.use(Vuetify, {
   components: {
     VApp,
     VSpeedDial,
     VNavigationDrawer,
     VFooter,
+    VDataTable,
     VList,
     VForm,
     VAlert,
@@ -70,8 +72,15 @@ let app
 
 sync(store, router)
 
+Vue.use(VueParticles)
+
 router.beforeEach((to, from, next) => {
   var currentUser = firebase.auth().currentUser
+  if (currentUser) {
+    store.commit('SET_USER')
+  } else {
+    store.commit('DEL_USER')
+  }
   console.log(currentUser)
   let requiresAuth = to.matched.some(record => record.meta.requiresAuth)
   if (requiresAuth) {

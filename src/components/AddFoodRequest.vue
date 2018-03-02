@@ -60,6 +60,8 @@ export default {
           Location: new firebase.firestore.GeoPoint(loc._lat, loc._long),
           timestamp: firebase.firestore.FieldValue.serverTimestamp,
           meals: this.Quantity,
+          username: firebase.auth().currentUser.displayName,
+          phoneNo: 9495333724,
           name: 'Normal Food'
       }).then(success => {
           swal('Good job!', 'Successfully submitted Food Request', 'success')

@@ -11,5 +11,6 @@ export default {
     currentLocation: null,
     addFoodReq: false,
     addFoodSupply: false,
-    AddMoney: false
+    AddMoney: false,
+    User: null
 }

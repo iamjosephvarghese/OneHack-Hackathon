@@ -71,6 +71,8 @@ export default {
           firebase.firestore().collection('foodavailable').add({
             Location: new firebase.firestore.GeoPoint(loc._lat, loc._long),
             meals: this.Quantity,
+            username: firebase.auth().currentUser.displayName,
+            phoneNo: 9495333724,
             // timestamp: firebase.firestore.FieldValue.serverTimestamp,
             name: 'Normal Food'
           }).then(success => {

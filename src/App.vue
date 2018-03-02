@@ -1,8 +1,26 @@
 <template>
   <v-app>
+    <vue-particles
+        color="#D81B60"
+        :particleOpacity="0.7"
+        :particlesNumber="80"
+        shapeType="circle"
+        :particleSize="4"
+        linesColor="#dedede"
+        :linesWidth="1"
+        :lineLinked="true"
+        :lineOpacity="0.4"
+        :linesDistance="150"
+        :moveSpeed="3"
+        :hoverEffect="true"
+        hoverMode="grab"
+        :clickEffect="true"
+        clickMode="push"
+      >
+      </vue-particles>
 
     <v-navigation-drawer
-      v-if="user"
+      v-if="getUser"
       persistent
       :mini-variant="miniVariant"
       :clipped="clipped"
@@ -32,7 +50,7 @@
       app
       :clipped-left="clipped"
     >
-      <v-toolbar-side-icon  v-if="user" @click.stop="drawer = !drawer"></v-toolbar-side-icon>
+      <v-toolbar-side-icon  v-if="getUser" @click.stop="drawer = !drawer"></v-toolbar-side-icon>
      <v-toolbar-title v-text="title"></v-toolbar-title>
       <v-spacer></v-spacer>
     </v-toolbar>
@@ -41,11 +59,8 @@
       
     </v-content>
     
-    <v-footer :fixed="fixed" app>
-      <span>&copy;Copyright 2018</span>
-    </v-footer>
-    
     <fab
+     v-if="getUser"
    :position="position"
    :bg-color="bgColor"
    :actions="fabActions"
@@ -73,6 +88,7 @@ import fab from 'vue-fab'
 import firebase from 'firebase'
 import AddFoodRequest from '@/components/AddFoodRequest'
 import AddFoodSupply from '@/components/AddFoodSupply'
+import { mapGetters } from 'vuex'
 import AddMoney from '@/components/AddMoney'
 export default {
   components: {
@@ -111,13 +127,12 @@ export default {
       miniVariant: false,
       rightDrawer: false,
       picker: null,
-      user: null,
       reactive: true,
       landscape: true,
       zin: 999,
       dialog: false,
-      title: 'oneHack',
-      bgColor: '#778899',
+      title: 'ZERO | OneHACK',
+      bgColor: '#D81B60 ',
           position: 'bottom-right',
           fabActions: [
               {
@@ -165,10 +180,15 @@ export default {
         // function to logout
         firebase.auth().signOut().then(success => {
           console.log('signout')
-          this.user = null
+          this.$store.commit('DEL_USER')
           this.$router.replace('/login')
         })
       }
+  },
+  computed: {
+    ...mapGetters([
+      'getUser'
+    ])
   },
   mounted () {
     this.user = firebase.auth().currentUser
@@ -182,4 +202,13 @@ export default {
 }
 </script>
 <style>
+#particles-js {
+  background-size: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 0;
+  height: 100%;
+}
 </style>
