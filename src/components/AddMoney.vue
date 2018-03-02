@@ -26,6 +26,7 @@
 <script>
 import firebase from 'firebase'
 import swal from 'sweetalert'
+import axios from 'axios'
 import { mapGetters } from 'vuex'
 export default {
   name: 'AddMoney',
@@ -50,6 +51,18 @@ export default {
           firebase.firestore().collection('money').add({
               amount: this.totalamount
           }).then(success => {
+
+              //TODO: change data here
+        axios({
+            method: 'get',
+            url: '/user/12345',
+            data: {
+                firstName: 'Fred',
+                lastName: 'Flintstone'
+            }
+            }).then(success => {
+                console.log(success)
+            })
               swal('GoodJob', 'Thanks for trusting us', 'success')
           }).catch(err => {
               swal('Sorry Error', err.message, 'error')

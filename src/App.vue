@@ -29,6 +29,14 @@
       fixed
       app
     >
+    <v-list-tile icon="logoContent" avatar>
+            <v-list-tile-avatar class="logoIcon">
+              <img src="./assets/zero.svg" >
+            </v-list-tile-avatar>
+            <v-list-tile-content>
+              <v-list-tile-title>ZERO APP</v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
       <v-list>
         <v-list-tile
           value="true"
@@ -39,6 +47,7 @@
           <v-list-tile-action>
             <v-icon v-html="item.icon"></v-icon>
           </v-list-tile-action>
+          
           <v-list-tile-content>
             <v-list-tile-title v-text="item.title"></v-list-tile-title>
           </v-list-tile-content>
@@ -104,22 +113,32 @@ export default {
       fixed: false,
       items: [
         {
-          icon: 'bubble_chart',
+          icon: 'dashboard',
           title: 'Dashboard',
           to: '/'
         },
         {
-          icon: 'bubble_chart',
+          icon: 'restaurant',
           title: 'Food Requests',
           to: '/foodrequests'
         },
         {
-          icon: 'bubble_chart',
+          icon: 'restaurant_menu',
           title: 'Foods Available',
           to: '/foods'
         },
         {
-          icon: 'bubble_chart',
+          icon: 'photo_library',
+          title: 'Gallery',
+          to: '/gallery'
+        },
+        {
+          icon: 'sms',
+          title: 'Notifications',
+          to: '/notifications'
+        },
+        {
+          icon: 'keyboard_tab',
           title: 'Logout',
           to: '/login'
         }
@@ -210,5 +229,8 @@ export default {
   width: 100%;
   z-index: 0;
   height: 100%;
+}
+.avatar {
+  height:100px;
 }
 </style>

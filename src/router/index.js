@@ -4,6 +4,8 @@ import DashView from '@/components/DashView'
 import Login from '@/components/Login'
 import FoodsAvailable from '@/components/FoodsAvailable'
 import FoodRequests from '@/components/FoodRequests'
+import Notifications from '@/components/Notifications'
+import Gallery from '@/components/Gallery'
 
 Vue.use(Router)
 
@@ -30,6 +32,18 @@ export default new Router({
       path: '/foodrequests',
       component: FoodRequests,
       name: 'FoodRequests',
+      meta: {requiresAuth: true}
+    },
+    {
+      path: '/notifications',
+      component: Notifications,
+      name: 'Notifications',
+      meta: {requiresAuth: true}
+    },
+    {
+      path: '/gallery',
+      component: Gallery,
+      name: 'Gallery',
       meta: {requiresAuth: true}
     }
 
