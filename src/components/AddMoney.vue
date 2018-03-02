@@ -52,19 +52,25 @@ export default {
               amount: this.totalamount
           }).then(success => {
               // TODO: change data here
-          axios({
-              method: 'get',
-              url: 'http://localhost:3000/api/Trade',
-              data: {
-                  $class: 'org.acme.biznet.Trade',
-                  commodity: 'resource:org.acme.biznet.Commodity#6000',
-                  newOwner: 'resource:org.acme.biznet.Trader#5200',
-                  timestamp: '2018-03-02T01:34:05.976Z'
-              }
-              }).then(success => {
-                  console.log(success)
-              })
-              swal('GoodJob', 'Thanks for trusting us', 'success')
+            firebase.firestore().doc('/blockchainDat/data').get().then(doc => {
+                var t = parseInt(doc.data().TraderValue)
+                axios({
+                method: 'post',
+                url: 'http://localhost:3000/api/Trade',
+                data: {
+                    $class: 'org.acme.biznet.Trade',
+                    commodity: 'resource:org.acme.biznet.Commodity#6000',
+                    newOwner: `resource:org.acme.biznet.Trader#${t}`,
+                    timestamp: '2018-03-02T01:34:05.976Z'
+                }
+                }).then(success => {
+                    firebase.firestore().doc('/blockchainDat/data').set({
+                        TraderValue: t+1
+                    }).then(success => {
+                        swal('GoodJob', 'Thanks for trusting us', 'success')
+                    })
+                })
+            })
           }).catch(err => {
               swal('Sorry Error', err.message, 'error')
           })
