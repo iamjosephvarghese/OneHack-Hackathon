@@ -52,16 +52,18 @@ export default {
               amount: this.totalamount
           }).then(success => {
               // TODO: change data here
-        axios({
-            method: 'get',
-            url: '/user/12345',
-            data: {
-                firstName: 'Fred',
-                lastName: 'Flintstone'
-            }
-            }).then(success => {
-                console.log(success)
-            })
+          axios({
+              method: 'get',
+              url: 'http://localhost:3000/api/Trade',
+              data: {
+                  $class: 'org.acme.biznet.Trade',
+                  commodity: 'resource:org.acme.biznet.Commodity#6000',
+                  newOwner: 'resource:org.acme.biznet.Trader#5200',
+                  timestamp: '2018-03-02T01:34:05.976Z'
+              }
+              }).then(success => {
+                  console.log(success)
+              })
               swal('GoodJob', 'Thanks for trusting us', 'success')
           }).catch(err => {
               swal('Sorry Error', err.message, 'error')
