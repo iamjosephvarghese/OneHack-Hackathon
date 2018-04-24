@@ -65,7 +65,7 @@ export default {
                 }
                 }).then(success => {
                     firebase.firestore().doc('/blockchainDat/data').set({
-                        TraderValue: t+1
+                        TraderValue: (t + 1)
                     }).then(success => {
                         swal('GoodJob', 'Thanks for trusting us', 'success')
                     })
